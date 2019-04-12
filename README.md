@@ -1,2 +1,2 @@
-# proj_programacao_sistema_II
+# Projeto - Programação de Sistemas II
 Projeto para a disciplina de Programação de Sistemas II
