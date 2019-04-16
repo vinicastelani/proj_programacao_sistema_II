@@ -1,0 +1,43 @@
+/* POSITION */
+.relative{
+  position: relative;
+}
+.absolute{
+  position: absolute;
+}
+.float-left{
+  float:left;
+}
+.float-right{
+  float:right;
+}
+/* PPOSITION */
+
+/* FONT */
+.versus{
+  font-weight: bold;
+  font-size: 70px;
+  color:#515151;
+}
+
+.placar{
+  font-weight: bold;
+  font-size: 70px;
+  color:#515151;
+}
+
+.status{
+  font-size: 20px
+}
+
+.endgame{
+  font-size:30px;
+  display: none;
+}
+/* FONT */
+
+/* ATAQUE */
+#time1-status, #time2-status{
+
+}
+/* ATAQUE */
