@@ -1,97 +1,82 @@
 package mack.projeto.ps2;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import io.dropwizard.jersey.*;
-import io.dropwizard.jersey.params.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.util.*;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-@Path("/time")
-@Produces(MediaType.APPLICATION_JSON)
 public class TimeDAO {
 
-    public static void main(String[] args) {
+    private PreparedStatement stmC;
+    private PreparedStatement stmR;
+    private PreparedStatement stmU;
+    private PreparedStatement stmD;
+
+    private Connection conn;
+
+    public TimeDAO() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             String url = "jdbc:derby://localhost:1527/projeto";
             String usuario = "projeto", senha = "projeto";
             Connection conexao = DriverManager.getConnection(url, usuario, senha);
 
-            String sqlInsert = "INSERT INTO time (nome, ano_fundacao, cidade, estado)";
-            sqlInsert += " VALUES (?,?,?,?)";
-            String sqlSelect = "SELECT * FROM time";
-            String sqlUpdate = "UPDATE time SET nome=?, ano_fundacao=?, cidade=?, estado=?";
-            sqlUpdate += " WHERE id_time=?";
-            String sqlDelete = " DELETE FROM time WHERE id_time=?";
-
-            PreparedStatement stmInsert = conexao.prepareStatement(sqlInsert);
-            PreparedStatement stmSelect = conexao.prepareStatement(sqlSelect);
-            PreparedStatement stmUpdate = conexao.prepareStatement(sqlUpdate);
-            PreparedStatement stmDelete = conexao.prepareStatement(sqlDelete);
-
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Falha na carga do Driver JDBC!");
-        } catch (SQLException ex) {
-            System.out.println("Falha ao acessar a base de dados: " + ex.getMessage());
+            this.stmC = this.conn.prepareStatement("INSERT INTO time(nome, matricula) VALUES(?,?)",Statement.RETURN_GENERATED_KEYS);
+            this.stmR = this.conn.prepareStatement("SELECT * FROM time");
+            this.stmU = this.conn.prepareStatement("UPDATE time SET nome=?, matricula=? WHERE id=?");
+            this.stmD = this.conn.prepareStatement("DELETE FROM time WHERE id=?");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private List<Time> times;
-    private long proximoId;
-
-    public TimeDAO() {
-        proximoId = 1;
-        times = new ArrayList<>();
-        times.add(new Time(proximoId++, "São Paulo", 1930, "São Paulo", "SP"));
-        times.add(new Time(proximoId++, "Palmeiras", 1914, "São Paulo", "SP"));
+    public void close(){
+        try{
+            this.conn.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
-
-    @GET
+    
     public List<Time> read() {
-        return times;
-    }
-
-    @POST
-    public Time create(Time a) {
-        a.setIdTime(proximoId++);
-        times.add(a);
-        return a;
-    }
-
-    @PUT
-    @Path("{id}")
-    public Time update(@PathParam("id") LongParam id, Time a) {
-        for (Time time : times) {
-            if (time.getIdTime() == id.get()) {
-                time.setNome(a.getNome());
-                time.setAnoFundacao(a.getAnoFundacao());
-                time.setCidade(a.getCidade());
-                time.setEstado(a.getEstado());
-                return time;
+        try {
+            ResultSet rs = this.stmR.executeQuery();
+            
+            List<Time> times = new ArrayList<>();
+            
+            while(rs.next()) {
+                Time p = new Time();
+                p.setIdTime(rs.getLong("id"));
+                p.setNome(rs.getString("nome"));
+                
+                times.add(p);
             }
+            
+            return times;
+        } catch(Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
-
-    @DELETE
-    @Path("{id}")
-    public Response delete(@PathParam("id") LongParam id) {
-        Time a = null;
-        for (Time time : times) {
-            if (time.getIdTime() == id.get()) {
-                a = time;
-                break;
-            }
+ 
+    public Time create(Time novoTime) {
+        try {
+            this.stmC.setString(1, novoTime.getNome());
+            
+            this.stmC.executeUpdate();
+            
+            ResultSet rs = this.stmC.getGeneratedKeys();
+            rs.next();
+            long id = rs.getLong(1);
+            novoTime.setIdTime(id);
+            
+            return novoTime;
+        }catch(Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        if (a != null) {
-            times.remove(a);
-        } else {
-            throw new WebApplicationException("Professor com id =" + id.get()
-                    + "não encontrado!", 404);
-        }
-        return Response.ok().build();
-    }
-
+    }    
 }
