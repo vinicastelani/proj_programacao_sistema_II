@@ -1,103 +1,28 @@
 <!DOCTYPE html>
-<html lang="pt" dir="ltr">
+<html lang="PT-br" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript" src="js/script.js"></script>
     <title></title>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery/jquery-3.4.1.min.js"></script>
+    <script src="js/script.js"></script>
   </head>
   <body>
-    <div class="container-fluid relative">
-      <div class="row background-gray">
-        <div class="col-12">
-          <div class="row">
-            <div class="col-6 text-left">
-              <div class="row">
-                <div class="col-3"><span class="h1 padding-content margin-content nav-bar">Menu</span></div>
-                <div class="col-3"><span class="h1 padding-content margin-content nav-bar">Menu</span></div>
-                <div class="col-3"><span class="h1 padding-content margin-content nav-bar">Menu</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-2 col-sm-12 background-green">
-          &nbsp;
-        </div>
-        <div class="col-lg-8 col-sm-12 padding-content text-center">
-          <div class="relative">
-            <div class="row">
-              <div class="col-2">
-                <img src="images/ball.png" alt="" class="absolute left-ball resize-small" id="ball-left">
-              </div>
-              <div class="col-8 text-center">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <span class="h1 relative padding-content">Insira um clube: </span>
-                    <div class="text-center form padding-content margin-content">
-                      <form class="" action="index.html" method="post">
-                        <div class="row">
-                          <!-- NOME DO CLUBE -->
-                          <div class="col-lg-6 col-sm-12 text-left">
-                            <span class="padding-content font-weight-bold">Nome do clube:</span> <br> <br>
-                          </div>
-                          <div class="col-lg-6 col-sm-12 text-left">
-                            <label for="time"><input type="text" name="time" placeholder="ex: Santos" value="" required> </label> <br>
-                          </div>
-                          <!-- NOME DO CLUBE -->
 
-                          <!-- DATA DE CRIAÇÃO -->
-                          <div class="col-lg-6 col-sm-12 text-left">
-                              <span class="padding-content font-weight-bold">Data de criação:</span> <br> <br>
-                          </div>
-                          <div class="col-lg-6 col-sm-12 text-left">
-                            <label for="data"><input type="date" name="data" value="" required></label> <br>
-                          </div>
-                          <!-- DATA DE CRIAÇÃO -->
-
-                          <!-- CIDADE -->
-                          <div class="col-lg-6 col-sm-12 text-left">
-                              <span class="padding-content font-weight-bold">Cidade:</span> <br>
-                          </div>
-                          <div class="col-lg-6 col-sm-12 text-left">
-                            <label for="cidade"><input type="text" name="cidade" placeholder="ex: Santos"  value="" required></label> <br>
-                          </div>
-                          <!-- CIDADE -->
-
-                          <!-- ESTADO -->
-                          <div class="col-lg-6 col-sm-12 text-left">
-                              <span class="padding-content font-weight-bold">Estado:</span> <br>
-                          </div>
-                          <div class="col-lg-6 col-sm-12 text-left">
-                            <label for="estado"><input type="text" name="estado" placeholder="ex: SP"  value="" required></label> <br>
-                          </div>
-                          <!-- ESTADO -->
-                        </div>
-                        <div class="row">
-                          <div class="col-12 text-center">
-                            <input type="submit" value="Enviar">
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-2 ">
-                <img src="images/ball.png" alt="" class="absolute right-ball resize-small" id="ball-right">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-2 col-sm-12 background-green">
-          &nbsp;
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mx-auto">
+        <div class="row pt-5">
+          <div class="col-12"><p class="text-center" id="status"></div>
+          <div class="col-lg-3"><p id="placar-1" class="set-fontsize-70 text-center">0</p></div>
+          <div class="col-lg-6"><p class="set-fontsize-70 text-center">X</div>
+          <div class="col-lg-3"><p id="placar-2" class="set-fontsize-70 text-center">0</p></div>
+          <div class="col-12"><p class="text-center"><button id="start">Iniciar a partida!</button></p></div>
         </div>
       </div>
     </div>
+  </div>
 
   </body>
 </html>
