@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html lang="PT-br" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/jquery/jquery-3.4.1.min.js"></script>
-    <script src="js/script.js"></script>
-  </head>
-  <body>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6 mx-auto">
-        <div class="row pt-5">
-          <div class="col-12"><p class="text-center" id="status"></div>
-          <div class="col-lg-3"><p id="placar-1" class="set-fontsize-70 text-center">0</p></div>
-          <div class="col-lg-6"><p class="set-fontsize-70 text-center">X</div>
-          <div class="col-lg-3"><p id="placar-2" class="set-fontsize-70 text-center">0</p></div>
-          <div class="col-12"><p class="text-center"><button id="start">Iniciar a partida!</button></p></div>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/jquery/jquery-3.4.1.min.js"></script>
+  <script src="js/script.js"></script>
+</head>
+
+<body>
+  <div class="container pt-5">
+    <div class="row mx-auto pb-5 ">
+      <div class="col-lg-3">&nbsp;</div>
+      <div class="col-lg-6 col-md-8 col-sm-12 bgcolor-malachite-green pt-5 mx-auto set-custom-size-1 relative">
+        <p id="return-message" class="text-center font-weight-bold textcolor-white" style="display:none;">&nbsp;</p>
+        <p class="text-center font-weight-bold textcolor-white">Adicionar um time:</p>
+        <div class="pt-3">
+          <p class="font-weight-bold textcolor-white">Nome: <input type="text" class="float-right"></p>
+          <p class="font-weight-bold textcolor-white">Estádio: <input type="text" class="float-right"></p>
+          <p class="font-weight-bold textcolor-white">Ano de fundação: <input type="date" class="float-right"></p>
+          <p class="text-center"><input type="button" value="Adicionar à Liga!" id="submitSquad"></p>
+        </div>
+      </div>
+      <div class=" col-lg-3">&nbsp;
         </div>
       </div>
     </div>
-  </div>
 
-  </body>
+    <div class="footer set-height-100">
+      &nbsp;
+    </div>
+</body>
+
 </html>

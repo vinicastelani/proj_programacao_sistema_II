@@ -1,3 +1,28 @@
-/* FONTSIZE */
-.set-fontsize-70{font-size:70px;}
-/* FONTSIZE */
+body{margin:0;background:#82BFDC;background-image:url("../images/campo-de-futebol.jpg");
+background-position:center;background-size:cover;background-repeat:no-repeat;overflow: hidden;}
+/* BG COLOR */
+.bgcolor-malachite-green{background:transparent;}
+.success{background:#2CED2C;border-radius:5px;}
+.fail{background:#B33A3A;border-radius:5px;}
+.footer{background:#14141C;}
+/* BG COLOR */
+
+/* SIZING */
+.full-width{width:100%;}
+.set-height-100{height:100px;}
+.set-custom-size-1{height:500px;width:500px;}
+.set-custom-size-2{width:120px !important;height:30px !important;}
+/* SIZING */
+/* IMAGE SIZING */
+.set-50-50{width:50px;height:50px;}
+/* IMAGE SIZING */
+/* POSITIONING */
+.relative{position:relative;}
+.absolute{position:absolute;}
+.set-left-10{left:10px;}
+.set-right-10{right:10px;}
+.set-top-35{top:35px;}
+/* POSITIONING */
+/* FONT */
+.textcolor-white{color:#FFFFFF;}
+/* FONT */
