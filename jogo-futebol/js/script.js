@@ -1,47 +1,84 @@
-$ = jQuery;
-$(document).ready(function() {
-  var timeA = $("#time1");
-  var timeB = $("#time2");
-  var timeAStatus = $("#time1-status");
-  var timeBStatus = $("#time2-status");
+$(window).ready(function() {
 
+  var status = $("#status");
+  $(status).html("");
+  $(status).hide();
+  // START PARDIDA
+  $("#start").on("click", function() {
+    $("#placar-1").html("0");
+    $("#placar-2").html("0");
+    ataque();
+  });
+  // START PARDIDA
 
-  var start = $("#iniciar");
-  var endgame = $(".endgame");
+  // PLACAR
   var scoreA = 0;
   var scoreB = 0;
   var fimDeJogo = false;
-  timeAStatus.html("");
-  timeBStatus.html("");
-  function partida() {
-    var random = Math.floor((Math.random() * 100)); //Retorna um numero inteiro de 0 a 100
-
-    if ((Math.floor(random % 2)) == 0) {
-      scoreA++;
-      setTimeout(function(){
-        $(timeA).html(scoreA);
-      },3000);
-    } else {
-      $(timeB).html(scoreB);
-      scoreB++;
-      setTimeout(function(){
-        $(timeB).html(scoreB);
-      },3000);
+  // PLACAR
+  // RODADA DE ATAQUE
+  function ataque() {
+    var turn = Math.floor((Math.random() * 100) + 1);
+    console.log(turn);
+    if (turn % 2 == 0) {
+      // SE PAR ESTIVER ATACANDO
+      $(status).show();
+      $(status).html("PAR ESTA ATACANDO");
+      setTimeout(function() {
+        var chance = Math.floor((Math.random() * 100) + 1);
+        if (chance % 2 == 0) {
+          $(status).html("PAR FEZ O GOL !");
+          scoreA ++;
+          $("#placar-1").html(scoreA);
+          setTimeout(function() {
+            $(status).hide()
+          }, 3000);
+        } else {
+          $(status).html("PAR PERDEU O GOL !");
+          setTimeout(function() {
+            $(status).hide()
+          }, 3000);
+        }
+      }, 3000);
+      // SE PAR ESTIVER ATACANDO
     }
-    if (scoreA == 3 || scoreB == 3) {
+    // SE IMPAR ESTIVER ATACANDO
+    else {
+      $(status).show();
+      $(status).html("IMPAR ESTA ATACANDO");
+      setTimeout(function() {
+        var chance = Math.floor((Math.random() * 100) + 1);
+        if (chance % 2 == 0) {
+          $(status).html("IMPAR FEZ O GOL !");
+          scoreB ++;
+          $("#placar-2").html(scoreB);
+          setTimeout(function() {
+            $(status).hide()
+          }, 3000);
+        } else {
+          $(status).html("IMPAR PERDEU O GOL !");
+          setTimeout(function() {
+            $(status).hide()
+          }, 3000);
+        }
+      }, 3000);
+    }
+    if(scoreA == 3 || scoreB == 3){
       fimDeJogo = true;
+    } else{
+      fimDeJogo = false;
     }
-    setTimeout(function(){
-      if (!fimDeJogo) {
-        setTimeout(function() {
-          partida();
-        }, 3000);
-      } else {
-        endgame.show();
-      }
-    },3000);
+    if(fimDeJogo == false)
+    {
+      setTimeout(function(){
+        ataque();
+      },7000);
+    }
+    console.log("PLACAR "+scoreA);
+    console.log("PLACAR "+scoreB);
   }
-  $(start).on("click", function(){
-    partida();
-  });
+
+  // SE IMPAR ESTIVER ATACANDO
+  // RODADA DE ATAQUE
+
 });
