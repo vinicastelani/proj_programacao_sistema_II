@@ -81,15 +81,30 @@ public class JogoDAO {
         }
     }
 
-    public Jogo update
-
-    {
-
+    public boolean update(Jogo j){
+        try{
+            this.stmU.setString(1, j.getNomeTimeA());
+            this.stmU.setString(2, j.getNomeTimeB());
+            this.stmU.setInt(3, j.getGolsTimeA());
+            this.stmU.setInt(4, j.getGolsTimeB());
+            this.stmU.setLong(5, j.getIdJogo());
+            if (this.stmU.executeUpdate() > 0){
+                return true;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
-    public Jogo delete
-
-    {
-
+    public boolean delete(Jogo j){
+        try{
+            this.stmD.setLong(1, j.getIdJogo());
+            if (this.stmD.executeUpdate() > 0){
+                return true;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
-    //Fazer Update e Delete
 }

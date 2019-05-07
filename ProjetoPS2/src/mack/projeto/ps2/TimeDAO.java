@@ -23,7 +23,7 @@ public class TimeDAO {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             String url = "jdbc:derby://localhost:1527/projeto";
             String usuario = "projeto", senha = "projeto";
-            Connection conexao = DriverManager.getConnection(url, usuario, senha);
+            Connection conn = DriverManager.getConnection(url, usuario, senha);
 
             this.stmC = this.conn.prepareStatement("INSERT INTO time(nome, ano_fundacao, cidade, estado) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             this.stmR = this.conn.prepareStatement("SELECT * FROM time");
@@ -51,7 +51,7 @@ public class TimeDAO {
                 Time p = new Time();
                 p.setIdTime(rs.getLong("id"));
                 p.setNome(rs.getString("nome"));
-                p.setAnoFundacao(rs.getFloat("fundacao"));
+                p.setAnoFundacao(rs.getFloat("ano_fundacao"));
                 p.setCidade(rs.getString("cidade"));
                 p.setEstado(rs.getString("estado"));
                 times.add(p);
@@ -97,7 +97,7 @@ public class TimeDAO {
         return false;
     }
 
-    public Time delete(Time t) {
+    public boolean delete(Time t) {
         try {
             this.stmD.setLong(1, t.getIdTime());
             if (this.stmD.executeUpdate() > 0) {

@@ -25,20 +25,20 @@ public class TimeResource {
         return this.dao.create(a);
     }
 
-    @PUT
-    @Path("{id}")
-    public Response update(@PathParam("id") LongParam id, Time time) {
-        if (dao.update(id.get(), time)
-            return Response.ok().build()
-        );
-        throw new WebApplicationException("Erro" + Response.Status.NOT_FOUND);
-    }
+   // @PUT
+  //  @Path("{id}")
+   // public Response update(@PathParam("id") LongParam id, Time time) {
+   //     if (dao.update(id.get(), time)
+  //          return Response.ok().build()
+    //    );
+   //     throw new WebApplicationException("Erro" + Response.Status.NOT_FOUND);
+  //  }
 
-    @DELETE
-    @Path("{id}")
-    public Time delete
+   // @DELETE
+ //   @Path("{id}")
+  //  public Time deleteTime
 
-    {
+  //  {
 
-    }
+   // }
 }

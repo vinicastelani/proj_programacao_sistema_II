@@ -82,4 +82,31 @@ public class ContaBancariaDAO {
             return null;
         }
     }
+    
+    public boolean update (ContaBancaria cb) {
+        try{
+            this.stmU.setString(1, cb.getNomeCliente());
+            this.stmU.setString(2, cb.getSaldo());
+            this.stmU.setInt(3, cb.getNumeroAgencia());
+            this.stmU.setLong(4, cb.getIdContaBancaria());
+            if (this.stmU.executeUpdate() > 0){
+                return true;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean delete(ContaBancaria cb){
+        try {
+            this.stmD.setLong(1, cb.getIdContaBancaria());
+            if (this.stmD.executeUpdate() > 0){
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
