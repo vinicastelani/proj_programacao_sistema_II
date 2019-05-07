@@ -7,64 +7,38 @@ import java.util.*;
 
 @Path("/time")
 @Produces(MediaType.APPLICATION_JSON)
-public class TimeResource {    
+public class TimeResource {
 
     private TimeDAO dao;
-    
+
     public TimeResource(TimeDAO dao) {
         this.dao = dao;
     }
-    
+
     @GET
     public List<Time> read() {
         return dao.read();
     }
-    
+
     @POST
     public Time create(Time a) {
         return this.dao.create(a);
     }
-    
-    @GET
-    @Path("{id}")
-    public Time readOne(@PathParam("id") LongParam id) {
-        long idTime = id.get();
-        // Precisa implementar no DAO
-        return null;
-    }
-    
-//
-//    @PUT
-//    @Path("{id}")
-//    public Professor update(@PathParam("id") LongParam id, Professor p) {
-//        for (Professor professor: professores) {
-//            if (professor.getId() == id.get()) {
-//                professor.setNome(p.getNome());
-//                professor.setMatricula(p.getMatricula());
-//                return professor;
-//            }
-//        }
-//        return null;
-//    }
-//    
-//    @DELETE
-//    @Path("{id}")
-//    public Response delete(@PathParam("id") LongParam id) {
-//        Professor p = null;
-//        for (Professor professor: professores) {
-//            if (professor.getId() == id.get()) {
-//                p = professor;
-//                break;
-//            }
-//        }
-//        if (p != null) { 
-//            professores.remove(p); 
-//        }
-//        else {
-//            throw new WebApplicationException("Professor com id=" + id.get() 
-//                                              + " não encontrado!", 404);
-//        }
-//        return Response.ok().build();
-//    }
-}
 
+    @PUT
+    @Path("{id}")
+    public Response update(@PathParam("id") LongParam id, Time time) {
+        if (dao.update(id.get(), time)
+            return Response.ok().build()
+        );
+        throw new WebApplicationException("Erro" + Response.Status.NOT_FOUND);
+    }
+
+    @DELETE
+    @Path("{id}")
+    public Time delete
+
+    {
+
+    }
+}

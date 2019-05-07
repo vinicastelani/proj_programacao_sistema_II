@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,59 +25,87 @@ public class TimeDAO {
             String usuario = "projeto", senha = "projeto";
             Connection conexao = DriverManager.getConnection(url, usuario, senha);
 
-            this.stmC = this.conn.prepareStatement("INSERT INTO time(nome, matricula) VALUES(?,?)",Statement.RETURN_GENERATED_KEYS);
+            this.stmC = this.conn.prepareStatement("INSERT INTO time(nome, ano_fundacao, cidade, estado) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             this.stmR = this.conn.prepareStatement("SELECT * FROM time");
-            this.stmU = this.conn.prepareStatement("UPDATE time SET nome=?, matricula=? WHERE id=?");
+            this.stmU = this.conn.prepareStatement("UPDATE time SET nome=?, ano_fundacao=?, cidade=?, estado=? WHERE id=?");
             this.stmD = this.conn.prepareStatement("DELETE FROM time WHERE id=?");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void close(){
-        try{
+    public void close() {
+        try {
             this.conn.close();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public List<Time> read() {
         try {
             ResultSet rs = this.stmR.executeQuery();
-            
             List<Time> times = new ArrayList<>();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
                 Time p = new Time();
                 p.setIdTime(rs.getLong("id"));
                 p.setNome(rs.getString("nome"));
-                
+                p.setAnoFundacao(rs.getFloat("fundacao"));
+                p.setCidade(rs.getString("cidade"));
+                p.setEstado(rs.getString("estado"));
                 times.add(p);
             }
-            
             return times;
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
- 
+
     public Time create(Time novoTime) {
         try {
             this.stmC.setString(1, novoTime.getNome());
-            
+            this.stmC.setFloat(2, novoTime.getAnoFundacao());
+            this.stmC.setString(3, novoTime.getCidade());
+            this.stmC.setString(4, novoTime.getEstado());
             this.stmC.executeUpdate();
-            
             ResultSet rs = this.stmC.getGeneratedKeys();
             rs.next();
             long id = rs.getLong(1);
             novoTime.setIdTime(id);
-            
             return novoTime;
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-    }    
+    }
+
+    public boolean update(Time t) {
+        try {
+            this.stmU.setString(1, t.getNome());
+            this.stmU.setFloat(2, t.getAnoFundacao());
+            this.stmU.setString(3, t.getCidade());
+            this.stmU.setString(4, t.getEstado());
+            this.stmU.setLong(5, t.getIdTime());
+            if (this.stmU.executeUpdate() > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Time delete(Time t) {
+        try {
+            this.stmD.setLong(1, t.getIdTime());
+            if (this.stmD.executeUpdate() > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

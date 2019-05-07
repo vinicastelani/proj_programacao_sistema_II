@@ -23,11 +23,11 @@ public class ContaBancariaDAO {
             String usuario = "projeto", senha = "projeto";
             Connection conn = DriverManager.getConnection(url, usuario, senha);
             
-            this.stmC = this.conn.prepareStatement("INSERT INTO contabancaria(nome, agencia) VALUES(?,?)",
+            this.stmC = this.conn.prepareStatement("INSERT INTO conta_bancaria(nome_titular, saldo, numero_agencia) VALUES(?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
-            this.stmR = this.conn.prepareStatement("SELECT * FROM contabancaria");
-            this.stmU = this.conn.prepareStatement("UPDATE contabancaria SET nome=?, agencia=? WHERE id=?");
-            this.stmD = this.conn.prepareStatement("DELETE FROM contabancaria WHERE id=?");
+            this.stmR = this.conn.prepareStatement("SELECT * FROM conta_bancaria");
+            this.stmU = this.conn.prepareStatement("UPDATE conta_bancaria SET nome_titular=?, saldo=?, numero_agencia=? WHERE id_conta=?");
+            this.stmD = this.conn.prepareStatement("DELETE FROM conta_bancaria WHERE id_conta=?");
         }catch(Exception e) {
             e.printStackTrace();
         }
@@ -51,6 +51,7 @@ public class ContaBancariaDAO {
                 ContaBancaria cb = new ContaBancaria();
                 cb.setIdContaBancaria(rs.getLong("id"));
                 cb.setNomeCliente(rs.getString("nome"));
+                cb.setSaldo(rs.getString("saldo"));
                 cb.setNumeroAgencia(rs.getInt("agencia"));
                 
                 professores.add(cb);
@@ -63,18 +64,19 @@ public class ContaBancariaDAO {
         return null;
     }
     
-    public ContaBancaria create(ContaBancaria novoProfessor) {
+    public ContaBancaria create(ContaBancaria novaConta) {
         try {
-            this.stmC.setString(1, novoProfessor.getNomeCliente());
-            this.stmC.setInt(2, novoProfessor.getNumeroAgencia());
+            this.stmC.setString(1, novaConta.getNomeCliente());
+            this.stmC.setString(2, novaConta.getSaldo());
+            this.stmC.setInt(3, novaConta.getNumeroAgencia());
             this.stmC.executeUpdate();
             
             ResultSet rs = this.stmC.getGeneratedKeys();
             rs.next();
             long id = rs.getLong(1);
-            novoProfessor.setIdContaBancaria(id);
+            novaConta.setIdContaBancaria(id);
             
-            return novoProfessor;
+            return novaConta;
         }catch(Exception e) {
             e.printStackTrace();
             return null;
