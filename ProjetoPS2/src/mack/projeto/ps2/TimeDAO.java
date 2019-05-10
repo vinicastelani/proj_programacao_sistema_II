@@ -25,16 +25,21 @@ public class TimeDAO {
             String usuario = "projeto", senha = "projeto";
             Connection conn = DriverManager.getConnection(url, usuario, senha);
 
-            this.stmC = this.conn.prepareStatement("INSERT INTO time(nome, ano_fundacao, cidade, estado) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            this.stmR = this.conn.prepareStatement("SELECT * FROM time");
-            this.stmU = this.conn.prepareStatement("UPDATE time SET nome=?, ano_fundacao=?, cidade=?, estado=? WHERE id=?");
-            this.stmD = this.conn.prepareStatement("DELETE FROM time WHERE id=?");
+            String sqlC = "INSERT INTO time(nome, ano_fundacao, cidade, estado) VALUES(?,?,?,?)";
+            String sqlR = "SELECT * FROM time";
+            String sqlU = "UPDATE time SET nome=?, ano_fundacao=?, cidade=?, estado=? WHERE id=?";
+            String sqlD = "DELETE FROM time WHERE id=?";
+            
+            this.stmC = conn.prepareStatement(sqlC,Statement.RETURN_GENERATED_KEYS);
+            this.stmR = conn.prepareStatement(sqlR);
+            this.stmU = conn.prepareStatement(sqlU);
+            this.stmD = conn.prepareStatement(sqlD);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void close() {
+    public void close() {   
         try {
             this.conn.close();
         } catch (Exception e) {
@@ -51,7 +56,7 @@ public class TimeDAO {
                 Time p = new Time();
                 p.setIdTime(rs.getLong("id"));
                 p.setNome(rs.getString("nome"));
-                p.setAnoFundacao(rs.getFloat("ano_fundacao"));
+                p.setAnoFundacao(rs.getString("ano_fundacao"));
                 p.setCidade(rs.getString("cidade"));
                 p.setEstado(rs.getString("estado"));
                 times.add(p);
@@ -66,7 +71,7 @@ public class TimeDAO {
     public Time create(Time novoTime) {
         try {
             this.stmC.setString(1, novoTime.getNome());
-            this.stmC.setFloat(2, novoTime.getAnoFundacao());
+            this.stmC.setString(2, novoTime.getAnoFundacao());
             this.stmC.setString(3, novoTime.getCidade());
             this.stmC.setString(4, novoTime.getEstado());
             this.stmC.executeUpdate();
@@ -84,7 +89,7 @@ public class TimeDAO {
     public boolean update(Time t) {
         try {
             this.stmU.setString(1, t.getNome());
-            this.stmU.setFloat(2, t.getAnoFundacao());
+            this.stmU.setString(2, t.getAnoFundacao());
             this.stmU.setString(3, t.getCidade());
             this.stmU.setString(4, t.getEstado());
             this.stmU.setLong(5, t.getIdTime());

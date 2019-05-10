@@ -3,21 +3,13 @@ package mack.projeto.ps2;
 public class Time {
     private long idTime;
     private String nome;
-    private float anoFundacao;
+    private String anoFundacao;
     private String cidade;
     private String estado;
     
     public Time(){ }
-    
-    /**
-     *
-     * @param idTime
-     * @param nome
-     * @param anoFundacao
-     * @param cidade
-     * @param estado
-     */
-    public Time(long idTime,String nome,float anoFundacao, String cidade,  String estado){
+
+    public Time(long idTime,String nome,String anoFundacao, String cidade,  String estado){
         this.idTime = idTime;
         this.nome = nome;
         this.anoFundacao = anoFundacao;
@@ -41,11 +33,11 @@ public class Time {
         this.nome = nome;
     }
 
-    public float getAnoFundacao() {
+    public String getAnoFundacao() {
         return anoFundacao;
     }
 
-    public void setAnoFundacao(float anoFundacao) {
+    public void setAnoFundacao(String anoFundacao) {
         this.anoFundacao = anoFundacao;
     }
 

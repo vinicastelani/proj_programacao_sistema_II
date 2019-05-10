@@ -23,11 +23,15 @@ public class ContaBancariaDAO {
             String usuario = "projeto", senha = "projeto";
             Connection conn = DriverManager.getConnection(url, usuario, senha);
             
-            this.stmC = this.conn.prepareStatement("INSERT INTO conta_bancaria(nome_titular, saldo, numero_agencia) VALUES(?,?,?)",
-                    Statement.RETURN_GENERATED_KEYS);
-            this.stmR = this.conn.prepareStatement("SELECT * FROM conta_bancaria");
-            this.stmU = this.conn.prepareStatement("UPDATE conta_bancaria SET nome_titular=?, saldo=?, numero_agencia=? WHERE id_conta=?");
-            this.stmD = this.conn.prepareStatement("DELETE FROM conta_bancaria WHERE id_conta=?");
+            String sqlC = "INSERT INTO conta_bancaria(nome_titular, saldo, numero_agencia) VALUES(?,?,?)";
+            String sqlR ="SELECT * FROM conta_bancaria";
+            String sqlU = "UPDATE conta_bancaria SET nome_titular=?, saldo=?, numero_agencia=? WHERE id_conta=?";
+            String sqlD ="DELETE FROM conta_bancaria WHERE id_conta=?";
+            
+            this.stmC = conn.prepareStatement(sqlC,Statement.RETURN_GENERATED_KEYS);
+            this.stmR = conn.prepareStatement(sqlR);
+            this.stmU = conn.prepareStatement(sqlU);
+            this.stmD = conn.prepareStatement(sqlD);
         }catch(Exception e) {
             e.printStackTrace();
         }

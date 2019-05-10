@@ -24,10 +24,15 @@ public class JogoDAO {
             String usuario = "projeto", senha = "projeto";
             Connection conn = DriverManager.getConnection(url, usuario, senha);
 
-            this.stmC = this.conn.prepareStatement("INSERT INTO jogo(nome_time_a, nome_time_b, gols_time_a, gols_time_b) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            this.stmR = this.conn.prepareStatement("SELECT * FROM jogo");
-            this.stmU = this.conn.prepareStatement("UPDATE jogo SET nome_time_a=?, nome_time_b=?, gols_time_a=?, gols_time_b=? WHERE id_jogo=?");
-            this.stmD = this.conn.prepareStatement("DELETE FROM jogo WHERE id_jogo=?");
+            String sqlC = "INSERT INTO jogo(nome_time_a, nome_time_b, gols_time_a, gols_time_b) VALUES(?,?,?,?)";
+            String sqlR = "SELECT * FROM jogo";
+            String sqlU = "UPDATE jogo SET nome_time_a=?, nome_time_b=?, gols_time_a=?, gols_time_b=? WHERE id_jogo=?";
+            String sqlD = "DELETE FROM jogo WHERE id_jogo=?";
+            
+            this.stmC = conn.prepareStatement(sqlC,Statement.RETURN_GENERATED_KEYS);
+            this.stmR = conn.prepareStatement(sqlR);
+            this.stmU = conn.prepareStatement(sqlU);
+            this.stmD = conn.prepareStatement(sqlD);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,11 +54,11 @@ public class JogoDAO {
 
             while (rs.next()) {
                 Jogo j = new Jogo();
-                j.setIdJogo(rs.getLong("id"));
-                j.setNomeTimeA(rs.getString("time1"));
-                j.setNomeTimeB(rs.getString("time2"));
-                j.setGolsTimeA(rs.getInt("golsTime1"));
-                j.setGolsTimeB(rs.getInt("golsTime2"));
+                j.setIdJogo(rs.getLong("id_jogo"));
+                j.setNomeTimeA(rs.getString("nome_time_a"));
+                j.setNomeTimeB(rs.getString("nome_time_b"));
+                j.setGolsTimeA(rs.getInt("gols_time_a"));
+                j.setGolsTimeB(rs.getInt("gols_time_b"));
                 jogos.add(j);
             }
             return jogos;
